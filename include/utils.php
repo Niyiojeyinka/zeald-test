@@ -97,3 +97,15 @@ function asTable($data) {
     $rows = implode('', $rows);
     return $styles . '<table>' . $headings . $rows . '</table>';
 }
+
+function column2Headings($data)
+{
+    $headings=collect($data->get(0))->keys();
+    return $headings->map(function($item, $key) {
+        return collect(explode('_', $item))
+            ->map(function($item, $key) {
+                return ucfirst($item);
+            })
+            ->join(' ');
+    });
+}

@@ -10,7 +10,7 @@
  * https://laravel.com/docs/5.8/collections
  */
 
- use Illuminate\Support;
+ //use Illuminate\Support;
 
 // prepare the request & process the arguments
 $database = 'nba2019';
@@ -28,4 +28,5 @@ if (!$type) {
 }
 
 $controller = new Controller($args);
-echo $controller->export($type, $format);
+echo $controller->$type($format);
+

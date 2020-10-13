@@ -1,37 +1,41 @@
 <?php
-use Illuminate\Support;  // https://laravel.com/docs/5.8/collections - provides the collect methods & collections class
-use LSS\Array2Xml;
 use classes\Exporter;
-//require_once('classes/Exporter.php');
+use classes\Core;
 
-class Controller {
+class Controller  extends Core {
 
-    public function __construct($args) {
-        $this->args = $args;
+    private $exporter ;
+    public $args;
+    public function __construct($args)
+    {
+        $this->args =$args;
+       $this->exporter= new Exporter();
     }
+    public function playerstats($format){
 
-    public function export($type, $format) {
         $data = [];
-        $exporter = new Exporter();
-        switch ($type) {
-            case 'playerstats':
-                $searchArgs = ['player', 'playerId', 'team', 'position', 'country'];
-                $search = $this->args->filter(function($value, $key) use ($searchArgs) {
-                    return in_array($key, $searchArgs);
-                });
-                $data = $exporter->getPlayerStats($search);
-                break;
-            case 'players':
-                $searchArgs = ['player', 'playerId', 'team', 'position', 'country'];
-                $search = $this->args->filter(function($value, $key) use ($searchArgs) {
-                    return in_array($key, $searchArgs);
-                });
-                $data = $exporter->getPlayers($search);
-                break;
-        }
-        if (!$data) {
-            exit("Error: No data found!");
-        }
-        return $exporter->format($data, $format);
+        $searchArgs = ['player', 'playerId', 'team', 'position', 'country'];
+        $search = $this->args->filter(function($value, $key) use ($searchArgs) {
+            return in_array($key, $searchArgs);
+        });
+        $data = $this->exporter->getPlayerStats($search);
+
+        return $this->view("test",["data"=>$data,'headings'=>column2Headings($data)]);
+
     }
+
+
+  public function players($format)
+  {   $data = [];
+     $searchArgs = ['player', 'playerId', 'team', 'position', 'country'];
+    $search = $this->args->filter(function($value, $key) use ($searchArgs) {
+        return in_array($key, $searchArgs);
+    });
+    $data = $this->exporter->getPlayers($search);
+    if (!$data) {
+        exit("Error: No data found!");
+    }
+  //  return $this->exporter->format($data, $format);
+  }
+   
 }
