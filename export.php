@@ -15,8 +15,8 @@
 // prepare the request & process the arguments
 $database = 'nba2019';
 include('include/utils.php');
-require_once('autoload.php');
 require_once('vendor/autoload.php');
+require_once('autoload.php');
 require_once('classes/Controller.php');
 
 // process the args

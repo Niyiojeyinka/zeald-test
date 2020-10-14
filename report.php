@@ -40,8 +40,18 @@ echo asTable($teamResult);
  */
 echo '<h1>Report 1 - Best 3pt Shooters</h1>';
 // write your query here
-
-
+//assuming no of 3pt made is 3pt? 
+$teamSql = "SELECT  roster.name,(year(CURRENT_TIMESTAMP)-year(roster.dob)) as age , team.name as team_name,roster.number,roster.pos as position,
+player_totals.3pt,
+((player_totals.3pt /player_totals.3pt_attempted)*100)
+FROM ((player_totals
+INNER JOIN roster ON roster.id = player_totals.player_id) 
+INNER JOIN team ON roster.team_code = team.code)
+Where ((player_totals.3pt /player_totals.3pt_attempted)*100) > 35 AND (year(CURRENT_TIMESTAMP)-year(roster.dob))>30
+ORDER BY ((player_totals.3pt /player_totals.3pt_attempted)*100) DESC";
+$teamResult = query($teamSql);
+// dd($teamResult);
+echo asTable($teamResult);
 /*
  * Report 2
  * --------
@@ -58,5 +68,14 @@ echo '<h1>Report 1 - Best 3pt Shooters</h1>';
  */
 echo '<h1>Report 2 - Best 3pt Shooting Teams</h1>';
 // write your query here
+$teamSql = "SELECT  team.name , ((SUM(player_totals.3pt) /SUM(player_totals.3pt_attempted))*100) as team_avg
+,COUNT(player_totals.id) as team_players
+FROM (( team 
+INNER JOIN roster ON roster.team_code = team.code) 
+INNER JOIN player_totals ON roster.team_code = team.code);
+";
+$teamResult = query($teamSql);
+// dd($teamResult);
+echo asTable($teamResult);
 
 ?>

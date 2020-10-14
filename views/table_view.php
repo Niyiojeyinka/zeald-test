@@ -18,6 +18,33 @@
 </style>
 </head>
 <body>
-    ' . $html . '
+    <table>
+    <tr>
+    <?php
+    if(empty($data)){
+        echo "No data Found";
+    }else{
+        foreach($headings as $heading){
+            echo "<td>$heading</td>";
+        }
+    }
+
+?>
+
+
+    </tr>
+
+    <?php
+foreach($data as $row){
+    echo "<tr>";
+foreach($row as $key=>$value){
+
+    echo "<td> $value </td>";
+}
+    echo "</tr>";
+
+}
+?>
+    </table>
 </body>
 </html>

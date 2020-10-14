@@ -250,12 +250,12 @@
             "version": "v6.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/tightenco/collect.git",
+                "url": "https://github.com/tighten/collect.git",
                 "reference": "e35230cde9e682881e9ac27105d0f26c32eca6d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tightenco/collect/zipball/e35230cde9e682881e9ac27105d0f26c32eca6d6",
+                "url": "https://api.github.com/repos/tighten/collect/zipball/e35230cde9e682881e9ac27105d0f26c32eca6d6",
                 "reference": "e35230cde9e682881e9ac27105d0f26c32eca6d6",
                 "shasum": ""
             },

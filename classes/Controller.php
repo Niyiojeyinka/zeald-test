@@ -12,21 +12,26 @@ class Controller  extends Core {
        $this->exporter= new Exporter();
     }
     public function playerstats($format){
-
-        $data = [];
+ 
         $searchArgs = ['player', 'playerId', 'team', 'position', 'country'];
         $search = $this->args->filter(function($value, $key) use ($searchArgs) {
             return in_array($key, $searchArgs);
         });
         $data = $this->exporter->getPlayerStats($search);
+     if (!$data) {
+        exit("Error: No data found!");
+    }
+        $view = $format =="html"?["fileDir"=>"table_view",
+                "vars"=>["data"=>$data,'headings'=>column2Headings($data)]
+                ]:$data;
 
-        return $this->view("test",["data"=>$data,'headings'=>column2Headings($data)]);
+        return $this->render($view,$format);
 
     }
 
 
   public function players($format)
-  {   $data = [];
+  {    
      $searchArgs = ['player', 'playerId', 'team', 'position', 'country'];
     $search = $this->args->filter(function($value, $key) use ($searchArgs) {
         return in_array($key, $searchArgs);
@@ -35,7 +40,11 @@ class Controller  extends Core {
     if (!$data) {
         exit("Error: No data found!");
     }
-  //  return $this->exporter->format($data, $format);
+    $view = $format =="html"?["fileDir"=>"table_view",
+                "vars"=>["data"=>$data,'headings'=>column2Headings($data)] 
+                ]:$data;
+
+        return $this->render($view,$format);
   }
    
 }

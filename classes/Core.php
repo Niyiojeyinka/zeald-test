@@ -74,4 +74,19 @@ class Core {
                 }
                 return implode("\n", $csv);
     }
+
+    public function render($data,$format)
+    {
+
+        if ($format=="html"){
+          $this->view($data['fileDir'],$data['vars']);
+        }elseif($format=="xml"){
+          return  $this->xml($data);
+        }elseif($format=="csv"){
+           return $this->csv($data);
+        }else{
+            //json
+           return $this->json($data);
+        }
+    }
 }
