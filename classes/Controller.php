@@ -1,15 +1,15 @@
 <?php
-use classes\Exporter;
 use classes\Core;
+use models\Model;
 
 class Controller  extends Core {
 
-    private $exporter ;
+    private $model ;
     public $args;
     public function __construct($args)
     {
         $this->args =$args;
-       $this->exporter= new Exporter();
+       $this->model= new Model();
     }
     public function playerstats($format){
  
@@ -17,7 +17,7 @@ class Controller  extends Core {
         $search = $this->args->filter(function($value, $key) use ($searchArgs) {
             return in_array($key, $searchArgs);
         });
-        $data = $this->exporter->getPlayerStats($search);
+        $data = $this->model->getPlayerStats($search);
      if (!$data) {
         exit("Error: No data found!");
     }
@@ -36,7 +36,7 @@ class Controller  extends Core {
     $search = $this->args->filter(function($value, $key) use ($searchArgs) {
         return in_array($key, $searchArgs);
     });
-    $data = $this->exporter->getPlayers($search);
+    $data = $this->model->getPlayers($search);
     if (!$data) {
         exit("Error: No data found!");
     }
